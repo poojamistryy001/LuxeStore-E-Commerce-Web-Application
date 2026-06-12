@@ -1,0 +1,52 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - LuxeStore</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <partial name="_Navbar" />
+
+    <!-- Main Content -->
+    <main class="container mt-4">
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["Success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
+        @RenderBody()
+
+    </main>
+
+    <!-- Footer -->
+    <partial name="_Footer" />
+
+    <!-- jQuery (IMPORTANT for validation) -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Site JS -->
+    <!--<script src="~/js/site.js" asp-append-version="true"></script>-->
+
+    <!-- Page Specific Scripts -->
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

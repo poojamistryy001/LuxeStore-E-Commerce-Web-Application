@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using LuxeStore.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav">
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        var user = await UserManager.GetUserAsync(User);
+
+        <li class="nav-item">
+            <span class="nav-link text-white">
+                👋 Hello, @user.FullName
+            </span>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-white"
+                   asp-controller="Order"
+                   asp-action="MyOrders">
+                My Orders
+            </a>
+        </li>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-warning"
+                       asp-area="Admin"
+                       asp-controller="AdminDashboard"
+                       asp-action="Index">
+                    Admin Panel
+                </a>
+            </li>
+        }
+
+        <li class="nav-item">
+            <form asp-area="Identity"
+                  asp-page="/Account/Logout"
+                  method="post"
+                  asp-route-returnUrl="/">
+
+                <button type="submit" class="nav-link btn btn-link text-danger">
+                    Logout
+                </button>
+
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-white"
+                   asp-area="Identity"
+                   asp-page="/Account/Register">
+                Register
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-white"
+                   asp-area="Identity"
+                   asp-page="/Account/Login">
+                Login
+            </a>
+        </li>
+    }
+
+</ul>

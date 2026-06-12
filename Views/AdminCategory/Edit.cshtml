@@ -1,0 +1,33 @@
+﻿@model LuxeStore.Models.Category
+@{
+    ViewData["Title"] = "Categories";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form asp-action="Edit" enctype="multipart/form-data" class="container mt-4">
+    <input type="hidden" asp-for="Id" />
+
+    <h2>Edit Category</h2>
+
+    <input asp-for="Name" class="form-control mb-2" />
+
+    <input asp-for="Description" class="form-control mb-2" />
+
+    @if (Model.ImageUrl != null)
+    {
+        <img src="@Model.ImageUrl" width="100" class="mb-2" />
+    }
+
+    <input type="file" name="imageFile" class="form-control mb-2" />
+
+    <div class="form-check mb-2">
+        <input asp-for="IsActive" class="form-check-input" />
+        <label class="form-check-label">Active</label>
+    </div>
+
+    <button class="btn btn-primary">Update</button>
+    <a asp-action="Index" class="btn btn-outline-dark">
+        <i class="bi bi-arrow-left"></i> Back
+    </a>
+
+</form>

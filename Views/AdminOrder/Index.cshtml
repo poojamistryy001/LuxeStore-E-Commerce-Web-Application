@@ -1,0 +1,85 @@
+﻿@model IEnumerable<LuxeStore.Models.Order>
+
+@{
+    ViewData["Title"] = "Orders";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between mb-3">
+        <h3>📦 Orders</h3>
+        
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <table class="table table-hover shadow-sm">
+
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Order No</th>
+                <th>Customer</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var o in Model)
+            {
+                <tr>
+                    <td>@o.Id</td>
+                    <td>@o.OrderNumber</td>
+                    <td>@o.User?.Email</td>
+                    <td>₹ @o.TotalAmount</td>
+
+                    <td>
+                        @if (o.Status == OrderStatus.Pending)
+                        {
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        }
+                        else if (o.Status == OrderStatus.Processing)
+                        {
+                            <span class="badge bg-primary">Processing</span>
+                        }
+                        else if (o.Status == OrderStatus.Shipped)
+                        {
+                            <span class="badge bg-info text-dark">Shipped</span>
+                        }
+                        else if (o.Status == OrderStatus.Delivered || o.Status == OrderStatus.Completed)
+                        {
+                            <span class="badge bg-success">Delivered</span>
+                        }
+                        else if (o.Status == OrderStatus.Cancelled)
+                        {
+                            <span class="badge bg-danger">Cancelled</span>
+                        }
+                        else if (o.Status == OrderStatus.Refunded)
+                        {
+                            <span class="badge bg-dark">Refunded</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">@o.Status</span>
+                        }
+                    </td>
+
+                    <td>@o.CreatedAt.ToShortDateString()</td>
+
+                    <td>
+                        <a asp-action="Details" asp-route-id="@o.Id"
+                           class="btn btn-sm btn-primary">View</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>

@@ -1,0 +1,78 @@
+﻿@model LuxeStore.Models.Product
+@{
+    ViewData["Title"] = "Product";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-4">
+
+            <h4 class="mb-3">➕ Add Product</h4>
+          
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success">@TempData["Success"]</div>
+            }
+
+            <form asp-action="Create" enctype="multipart/form-data">
+
+                <input asp-for="Name" class="form-control mb-2" placeholder="Product Name" />
+
+                <textarea asp-for="Description" class="form-control mb-2" placeholder="Description"></textarea>
+
+                <input asp-for="Price" class="form-control mb-2" placeholder="Price" />
+
+                <input asp-for="OldPrice" class="form-control mb-2" placeholder="Old Price" />
+
+                <input asp-for="StockQuantity" class="form-control mb-2" placeholder="Stock" />
+
+                <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control mb-2"></select>
+
+                <!-- IMAGE -->
+                <input type="file" name="imageFile" class="form-control mb-2" onchange="preview(event)" />
+                <img id="imgPreview" width="100" style="display:none;" class="mb-2" />
+
+                <!-- VARIANTS -->
+                <div class="mb-2">
+                    <label>Sizes:</label><br />
+                    <input type="checkbox" name="Sizes" value="S" /> S
+                    <input type="checkbox" name="Sizes" value="M" /> M
+                    <input type="checkbox" name="Sizes" value="L" /> L
+                    <input type="checkbox" name="Sizes" value="XL" /> XL
+                </div>
+
+                <!-- FLAGS -->
+                <div class="form-check">
+                    <input asp-for="IsFeatured" class="form-check-input" />
+                    <label>Featured</label>
+                </div>
+
+                <div class="form-check">
+                    <input asp-for="IsActive" class="form-check-input" checked />
+                    <label>Active</label>
+                </div>
+
+                <button class="btn btn-success mt-3">Save Product</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function preview(e){
+        let reader=new FileReader();
+        reader.onload=function(){
+        let img=document.getElementById('imgPreview');
+        img.src=reader.result;
+        img.style.display="block";
+        }
+        reader.readAsDataURL(e.target.files[0]);
+        }
+    </script>
+}

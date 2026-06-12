@@ -1,0 +1,123 @@
+﻿@model IEnumerable<LuxeStore.Models.Category>
+
+@{
+    ViewData["Title"] = "Categories";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-4">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold">📂 Categories</h3>
+
+        <a asp-action="Create" class="btn btn-success">
+            ➕ Add Category
+        </a>
+    </div>
+
+    <!-- SEARCH -->
+    <form method="get" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control"
+                   placeholder="Search category..." value="@Context.Request.Query["search"]" />
+
+            <button class="btn btn-dark">Search</button>
+        </div>
+    </form>
+
+    <!-- TABLE CARD -->
+    <div class="card shadow-lg border-0 rounded-4">
+
+        <div class="card-body p-0">
+
+            <table class="table table-hover align-middle mb-0">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th class="ps-4">Image</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center p-4">
+                                😕 No categories found
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <!-- IMAGE -->
+                                <td class="ps-4">
+                                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                    {
+                                        <img src="@item.ImageUrl"
+                                             class="rounded shadow-sm"
+                                             style="width:60px; height:60px; object-fit:cover;" />
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">No Image</span>
+                                    }
+                                </td>
+
+                                <!-- NAME -->
+                                <td class="fw-semibold">
+                                    @item.Name
+                                </td>
+
+                                <!-- STATUS -->
+                                <td>
+                                    @if (item.IsActive)
+                                    {
+                                        <span class="badge bg-success px-3 py-2">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger px-3 py-2">Inactive</span>
+                                    }
+                                </td>
+
+                                <!-- ACTIONS -->
+                                <td class="text-end pe-4">
+
+                                    <a asp-action="Edit"
+                                           asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-primary me-1">
+                                        Edit
+                                    </a>
+
+                                    <form asp-action="Delete"
+                                          asp-route-id="@item.Id"
+                                          method="post"
+                                          style="display:inline;">
+
+                                        <button class="btn btn-sm btn-danger"
+                                                onclick="return confirm('Delete this category?')">
+                                           Delete
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+</div>

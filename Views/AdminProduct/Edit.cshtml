@@ -1,0 +1,87 @@
+﻿@model LuxeStore.Models.Product
+@{
+    ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-4">
+
+            <h4 class="mb-4">Edit Product</h4>
+
+            <form asp-action="Edit" enctype="multipart/form-data">
+
+                <input type="hidden" asp-for="Id" />
+
+                <!-- PRODUCT NAME -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Product Name</label>
+                    <input asp-for="Name" class="form-control" />
+                </div>
+
+                <!-- DESCRIPTION -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Description</label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                </div>
+
+                <!-- PRICE -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Price</label>
+                    <input asp-for="Price" class="form-control" />
+                </div>
+
+                <!-- OLD PRICE -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Old Price (MRP)</label>
+                    <input asp-for="OldPrice" class="form-control" />
+                </div>
+
+                <!-- STOCK -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Stock Quantity</label>
+                    <input asp-for="StockQuantity" class="form-control" />
+                </div>
+
+                <!-- CATEGORY -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Category</label>
+                    <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control"></select>
+                </div>
+
+                <!-- IMAGE -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Current Image</label><br />
+                    @if (Model.ImageUrl != null)
+                    {
+                        <img src="@Model.ImageUrl" width="120" class="mb-2 rounded" />
+                    }
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Change Image</label>
+                    <input type="file" name="imageFile" class="form-control" />
+                </div>
+
+                <!-- FLAGS -->
+                <div class="form-check mb-2">
+                    <input asp-for="IsFeatured" class="form-check-input" />
+                    <label class="form-check-label">Featured Product</label>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input asp-for="IsActive" class="form-check-input" />
+                    <label class="form-check-label">Active</label>
+                </div>
+
+                <!-- BUTTON -->
+                <button class="btn btn-primary px-4">Update Product</button>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

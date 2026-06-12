@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- HERO SECTION (GRADIENT + ANIMATION FEEL) -->
+<div class="hero-section text-white text-center p-5 rounded mb-5">
+    <h1 class="display-3 fw-bold">Welcome to LuxeStore</h1>
+    <p class="lead">Premium fashion curated just for you</p>
+    <a asp-controller="Product" asp-action="Index" class="btn btn-warning btn-lg mt-3 px-4">
+        🛍️ Shop Now
+    </a>
+</div>
+
+<!-- FEATURES (CARDS STYLE) -->
+<div class="row text-center mb-5 g-4">
+    <div class="col-md-4">
+        <div class="feature-box p-4 shadow-sm rounded">
+            <div class="icon">🚚</div>
+            <h5 class="mt-2">Fast Delivery</h5>
+            <p class="text-muted">Quick delivery at your doorstep</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="feature-box p-4 shadow-sm rounded">
+            <div class="icon">💎</div>
+            <h5 class="mt-2">Premium Quality</h5>
+            <p class="text-muted">Top curated products</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="feature-box p-4 shadow-sm rounded">
+            <div class="icon">🔒</div>
+            <h5 class="mt-2">Secure Payment</h5>
+            <p class="text-muted">100% safe checkout</p>
+        </div>
+    </div>
+</div>
+
+<!-- FEATURED PRODUCTS (HOVER EFFECT) -->
+<h2 class="mb-4 fw-bold">🔥 Featured Categories</h2>
+
+<div class="row row-cols-2 row-cols-md-4 g-4">
+    <div class="col">
+        <a asp-controller="Product" asp-action="Index" asp-route-category="Footwear" class="text-decoration-none text-dark">
+            <div class="category-card text-center p-4 shadow-sm">
+                <div class="icon">👟</div>
+                <h6>Shoes</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col">
+        <a asp-controller="Product" asp-action="Index" asp-route-category="Clothing" class="text-decoration-none text-dark">
+            <div class="category-card text-center p-4 shadow-sm">
+                <div class="icon">🧥</div>
+                <h6>Clothing</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col">
+        <a asp-controller="Product" asp-action="Index" asp-route-category="Bags" class="text-decoration-none text-dark">
+            <div class="category-card text-center p-4 shadow-sm">
+                <div class="icon">👜</div>
+                <h6>Bags</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col">
+        <a asp-controller="Product" asp-action="Index" asp-route-category="Accessories" class="text-decoration-none text-dark">
+            <div class="category-card text-center p-4 shadow-sm">
+                <div class="icon">⌚</div>
+                <h6>Accessories</h6>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-box text-center mt-5 p-5 rounded">
+    <h3 class="fw-bold">Start Shopping Today!</h3>
+    <p class="text-muted">Discover trending styles now</p>
+    <a asp-controller="Product" asp-action="Index" class="btn btn-dark btn-lg mt-3 px-4">
+        Explore Products →
+    </a>
+</div>

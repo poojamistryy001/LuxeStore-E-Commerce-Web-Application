@@ -1,0 +1,129 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using LuxeStore.Services
+@using LuxeStore.Models.ViewModels
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject ICartService CartService
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    int cartCount = 0;
+    string userName = "";
+
+    if (SignInManager.IsSignedIn(User))
+    {
+        var user = await UserManager.GetUserAsync(User);
+        userName = user?.FullName ?? user?.Email ?? "User";
+
+        var userId = UserManager.GetUserId(User)!;
+        cartCount = await CartService.GetCartCountAsync(userId);
+    }
+}
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+
+        <!-- LOGO -->
+        <a class="navbar-brand fw-bold fs-4" asp-controller="Home" asp-action="Index">
+            🛍️ LuxeStore
+        </a>
+
+        <!-- TOGGLE (mobile) -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- NAV CONTENT -->
+        <div class="collapse navbar-collapse" id="navbarContent">
+
+            <!-- LEFT -->
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Product" asp-action="Index">Shop</a>
+                </li>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-warning fw-bold"
+                               asp-area="Admin"
+                               asp-controller="AdminDashboard"
+                               asp-action="Index">
+                            Admin Panel
+                        </a>
+                    </li>
+                }
+            </ul>
+
+            <!-- RIGHT -->
+            <ul class="navbar-nav align-items-center">
+
+                <!-- CART -->
+                <li class="nav-item me-2">
+                    <a class="nav-link position-relative" asp-controller="Cart" asp-action="Index">
+                        🛒
+                        <span class="badge bg-warning text-dark position-absolute top-0 start-100 translate-middle rounded-pill">
+                            @cartCount
+                        </span>
+                    </a>
+                </li>
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <!-- USER DROPDOWN -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
+                            👤 @userName
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end shadow">
+                            <li>
+                                <a class="dropdown-item" asp-controller="Order" asp-action="MyOrders">
+                                    📦 My Orders
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item" asp-controller="Profile" asp-action="Index">
+                                    ⚙️ Profile
+                                </a>
+                            </li>
+
+                            <li><hr class="dropdown-divider"></li>
+
+                            <li>
+                                <form asp-area="Identity"
+                                      asp-page="/Account/Logout"
+                                      asp-route-returnUrl="/"
+                                      method="post">
+      
+                                    <button type="submit" class="btn btn-danger w-100">
+                                        Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <!-- LOGIN / REGISTER -->
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
+                            Login
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="btn btn-warning ms-2"
+                               asp-area="Identity"
+                               asp-page="/Account/Register">
+                            Register
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>

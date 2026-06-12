@@ -1,0 +1,54 @@
+﻿@model EditProfileVM
+
+<style>
+    .profile-wrapper {
+        min-height: calc(100vh - 140px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #ffffff;
+    }
+
+    .profile-card {
+        width: 420px;
+        padding: 30px;
+        border-radius: 10px;
+        background: #ffffff;
+        border: 1px solid #e5e5e5;
+    }
+
+    .btn-save {
+        background-color: #000;
+        color: #fff;
+        border-radius: 6px;
+        padding: 10px;
+    }
+</style>
+
+<div class="profile-wrapper">
+    <div class="profile-card">
+
+        <h4 class="text-center mb-3">Edit Profile</h4>
+
+        <form method="post">
+
+            <div class="mb-3">
+                <input asp-for="FullName" class="form-control" placeholder="Full Name" />
+            </div>
+
+            <div class="mb-3">
+                <input asp-for="Email" class="form-control" disabled />
+            </div>
+
+            <div class="mb-3">
+                <input asp-for="PhoneNumber" class="form-control" placeholder="Phone Number" />
+            </div>
+
+            <button type="submit" class="btn btn-save w-100">
+                Save Changes
+            </button>
+
+        </form>
+
+    </div>
+</div>

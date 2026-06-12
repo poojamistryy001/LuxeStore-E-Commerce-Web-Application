@@ -1,0 +1,47 @@
+﻿@model ApplicationUser
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var orders = ViewBag.Orders as List<LuxeStore.Models.Order>;
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Customer Details</h3>
+
+        <a asp-action="Index" class="btn btn-outline-dark">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <div class="card p-3 mb-4">
+        <p><strong>Name:</strong> @Model.UserName</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+    </div>
+
+    <h5>Orders</h5>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Order #</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var o in orders)
+            {
+                <tr>
+                    <td>@o.OrderNumber</td>
+                    <td>₹@o.TotalAmount</td>
+                    <td>@o.Status</td>
+                    <td>@o.CreatedAt.ToString("dd MMM yyyy")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

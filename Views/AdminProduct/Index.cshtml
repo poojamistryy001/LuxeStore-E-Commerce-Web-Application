@@ -1,0 +1,79 @@
+﻿@model IEnumerable<LuxeStore.Models.Product>
+
+@{
+    ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between mb-3">
+        <h3>🛍 Products</h3>
+        <a asp-action="Create" class="btn btn-success">Add Product</a>
+        
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <div class="row">
+
+        @foreach (var p in Model)
+        {
+            <div class="col-md-3 mb-4">
+
+                <div class="card shadow-sm h-100">
+
+                    <img src="@p.ImageUrl" class="card-img-top"
+                         style="height:180px; object-fit:cover;" />
+
+                    <div class="card-body">
+
+                        <h6>@p.Name</h6>
+
+                        <p class="text-success fw-bold">₹ @p.Price</p>
+
+                        @if (p.OldPrice != null)
+                        {
+                            <p class="text-muted"><del>₹ @p.OldPrice</del></p>
+                        }
+
+                        <p>Stock: @p.StockQuantity</p>
+
+                        <p class="text-muted">@p.Category?.Name</p>
+
+                        @if (p.IsFeatured)
+                        {
+                            <span class="badge bg-warning">Featured</span>
+                        }
+
+                        @if (p.StockQuantity < 5)
+                        {
+                            <span class="badge bg-danger">Low Stock</span>
+                        }
+
+                        <div class="mt-2">
+
+                            <a asp-action="Edit" asp-route-id="@p.Id"
+                               class="btn btn-primary btn-sm">Edit</a>
+
+                            <form asp-action="Delete"
+                                  asp-route-id="@p.Id"
+                                  method="post"
+                                  style="display:inline;">
+                                <button class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>

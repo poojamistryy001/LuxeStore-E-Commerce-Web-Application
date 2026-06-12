@@ -1,0 +1,54 @@
+﻿@model LuxeStore.Models.Product
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height:350px;font-size:100px">
+            <img src="@(string.IsNullOrEmpty(Model.ImageUrl)
+                                 ? "/images/products/default.jpg"
+                                 : Model.ImageUrl)"
+                 class="img-fluid rounded"
+                 style="height:350px; object-fit:cover;" />
+        </div>
+    </div>
+    <div class="col-md-7">
+        <p class="text-muted">@Model.Category.Name</p>
+        <h2>@Model.Name</h2>
+        <p>@Model.Description</p>
+        <div class="mb-3">
+            <h4 class="d-inline">₹@Model.Price.ToString("N0")</h4>
+            @if (Model.OldPrice.HasValue)
+            {
+                <span class="text-muted text-decoration-line-through ms-2">₹@Model.OldPrice.Value.ToString("N0")</span>
+                <span class="badge bg-success ms-2">Save @(Math.Round((1 - Model.Price / Model.OldPrice.Value) * 100))%</span>
+            }
+        </div>
+
+        <form asp-controller="Cart" asp-action="Add" method="post">
+            <input type="hidden" name="productId" value="@Model.Id" />
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Select Size</label>
+                <div class="d-flex gap-2 flex-wrap">
+                    @foreach (var variant in Model.Variants)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="size" value="@variant.Size" id="sz_@variant.Size" required>
+                            <label class="form-check-label border rounded px-2 py-1" for="sz_@variant.Size">@variant.Size</label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Quantity</label>
+                <input type="number" name="quantity" value="1" min="1" max="10" class="form-control" style="width:80px" />
+            </div>
+
+            <button type="submit" class="btn btn-dark btn-lg">Add to Cart</button>
+            <a asp-action="Index" class="btn btn-outline-secondary btn-lg ms-2">Back to Shop</a>
+        </form>
+    </div>
+</div>

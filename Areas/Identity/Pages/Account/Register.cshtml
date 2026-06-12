@@ -1,0 +1,82 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<style>
+    .register-wrapper {
+        min-height: calc(100vh - 140px); /* navbar + footer space */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #ffffff; /* PURE WHITE */
+    }
+
+    .register-card {
+        width: 400px;
+        padding: 30px;
+        border-radius: 10px;
+        background: #ffffff;
+        border: 1px solid #e5e5e5;
+    }
+
+    .register-title {
+        text-align: center;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        border-radius: 6px;
+        padding: 10px;
+    }
+
+    .btn-register {
+        background-color: #000;
+        color: #fff;
+        border-radius: 6px;
+        padding: 10px;
+    }
+
+        .btn-register:hover {
+            background-color: #333;
+        }
+
+    .register-footer {
+        text-align: center;
+        margin-top: 15px;
+    }
+</style>
+
+
+<div class="register-wrapper">
+
+    <div class="register-card">
+        <h4 class="register-title">Create Account</h4>
+
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <input asp-for="Input.Email" class="form-control" placeholder="Email address" />
+            </div>
+
+            <div class="mb-3">
+                <input asp-for="Input.Password" type="password" class="form-control" placeholder="Password" />
+            </div>
+
+            <div class="mb-3">
+                <input asp-for="Input.ConfirmPassword" type="password" class="form-control" placeholder="Confirm Password" />
+            </div>
+
+            <button type="submit" class="btn btn-register w-100">Register</button>
+
+            <div class="register-footer">
+                Already have an account?
+                <a asp-page="./Login">Login</a>
+            </div>
+        </form>
+    </div>
+
+</div>
